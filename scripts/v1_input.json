@@ -1,0 +1,8 @@
+{
+  "instances": [
+    {
+      "directory": "/mnt/models/",
+      "max_num_files": 50
+    }
+  ]
+}

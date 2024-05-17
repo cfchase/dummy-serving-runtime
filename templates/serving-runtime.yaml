@@ -1,0 +1,33 @@
+apiVersion: serving.kserve.io/v1alpha1
+kind: ServingRuntime
+metadata:
+  annotations:
+    opendatahub.io/accelerator-name: ""
+    opendatahub.io/apiProtocol: REST
+    opendatahub.io/template-display-name: Dummy Runtime
+    opendatahub.io/template-name: dummy-runtime
+    openshift.io/display-name: Dummy Runtime
+  name: dummy-runtime
+  labels:
+    opendatahub.io/dashboard: "true"
+spec:
+  annotations:
+    prometheus.kserve.io/path: /metrics
+    prometheus.kserve.io/port: "8888"
+  containers:
+    - name: kserve-container
+      image: quay.io/cfchase/dummy-runtime:latest
+      imagePullPolicy: Always
+      ports:
+        - containerPort: 8080
+          protocol: TCP
+      volumeMounts:
+        - mountPath: /dev/shm
+          name: shm
+  multiModel: false
+  protocolVersions:
+    - v1
+  supportedModelFormats:
+    - autoSelect: true
+      name: pytorch
+      version: "1"
